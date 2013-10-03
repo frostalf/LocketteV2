@@ -17,7 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.plugin.PluginManager;
 
-import org.yi.acru.bukkit.lockette.*;
+import org.yi.acru.lockettev2.*;
 
 //~--- JDK imports ------------------------------------------------------------
 

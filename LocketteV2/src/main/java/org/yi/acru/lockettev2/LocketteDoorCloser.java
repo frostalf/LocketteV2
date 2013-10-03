@@ -11,7 +11,7 @@ package org.yi.acru.lockettev2;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-import org.yi.acru.bukkit.lockette.*;
+import org.yi.acru.lockettev2.*;
 
 //~--- JDK imports ------------------------------------------------------------
 

@@ -19,7 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.plugin.PluginManager;
 
-import org.yi.acru.bukkit.lockette.*;
+import org.yi.acru.lockettev2.*;
 
 public class LockettePrefixListener implements Listener {
     private static Lockette plugin;

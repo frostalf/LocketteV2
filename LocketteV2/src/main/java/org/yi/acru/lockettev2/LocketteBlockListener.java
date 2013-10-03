@@ -30,7 +30,7 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
-import org.yi.acru.bukkit.lockette.*;
+import org.yi.acru.lockettev2.*;
 import org.yi.acru.bukkit.PluginCore;
 
 public class LocketteBlockListener implements Listener {

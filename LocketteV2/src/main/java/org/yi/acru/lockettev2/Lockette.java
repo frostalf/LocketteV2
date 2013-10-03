@@ -900,6 +900,7 @@ public class Lockette extends PluginCore {
 
     //********************************************************************************************************************
     // Start of external permissions section
+    @Override
     protected boolean pluginEnableOverride(String pluginName) {
         return (isInList(pluginName, Lockette.disabledPluginList));
     }

@@ -27,22 +27,23 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import org.yi.acru.bukkit.PluginCoreLink.LinkType;
 
-import com.gmail.nossr50.datatypes.PlayerProfile;
+import com.gmail.nossr50.datatypes.player.PlayerProfile;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.register.payment.Method.MethodAccount;
-import com.nijikokun.register.payment.Methods;
+//mport com.nijiko.permissions.PermissionHandler;
+//import com.nijikokun.register.payment.Method.MethodAccount;
+//import com.nijikokun.register.payment.Methods;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
-import com.platymuus.bukkit.permissions.Group;
-import de.bananaco.bpermissions.api.WorldManager;
-import net.sacredlabyrinth.phaed.simpleclans.Clan;
-import org.anjocaido.groupmanager.GroupManager;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
-
+//import com.platymuus.bukkit.permissions.Group;
+//import de.bananaco.bpermissions.api.WorldManager;
+//import net.sacredlabyrinth.phaed.simpleclans.Clan;
+//import org.anjocaido.groupmanager.GroupManager;
+//import ru.tehkode.permissions.bukkit.PermissionsEx;
+import net.milkbowl.vault.Vault;
+import net.milkbowl.vault.VaultEco;
 
 
 public abstract class PluginCore extends JavaPlugin{
@@ -134,7 +135,7 @@ public abstract class PluginCore extends JavaPlugin{
 		linkSuperPerms = linkInternalPerms();
 		
 		// Link to various plugins, if available.
-		linkGroupManager = linkExternalPlugin("GroupManager", LinkType.GroupManager);
+		//linkGroupManager = linkExternalPlugin("GroupManager", LinkType.GroupManager);
 		//linkPermsBukkit = linkExternalPlugin("PermissionsBukkit", LinkType.GROUPS_PERMISSIONS);
 		//linkPermissionsEx = linkExternalPlugin("PermissionsEx", LinkType.GROUPS_PERMISSIONS);
 		//linkBPermissions = linkExternalPlugin("bPermissions", LinkType.GROUPS_PERMISSIONS);
@@ -146,7 +147,7 @@ public abstract class PluginCore extends JavaPlugin{
 		//linkIConomy = linkExternalPlugin("iConomy", LinkType.ECONOMY);
 		//linkRegister = linkExternalPlugin("Register", LinkType.ECONOMY);
 		// Permissions classic last.
-		linkPermissions = linkExternalPlugin("Permissions", LinkType.Permissions);
+		//linkPermissions = linkExternalPlugin("Permissions", LinkType.Permissions);
 		
 		if(usingExternalPermissions()) {
             log.info("[" + getDescription().getName() + "] Using linked plugin for admin permissions.");

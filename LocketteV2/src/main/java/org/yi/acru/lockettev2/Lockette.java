@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -24,9 +25,11 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.yi.acru.bukkit.PluginCore;
+import org.bukkit.plugin.java.JavaPlugin;
+import net.milkbowl.vault.Vault;
+import net.milkbowl.vault.VaultEco;
 
-public class Lockette extends PluginCore {
+public class Lockette extends JavaPlugin {
 
     private static Lockette plugin;
     private static boolean enabled = false;
@@ -50,7 +53,7 @@ public class Lockette extends PluginCore {
     protected final HashMap<String, Block> playerList = new HashMap<>();
     final static int materialTrapDoor = 96;
     final static int materialFenceGate = 107;
-
+    private final static Logger log = Logger.getLogger("Minecraft");
     public Lockette() {
         plugin = this;
     }
@@ -64,7 +67,7 @@ public class Lockette extends PluginCore {
         if (enabled) {
             return;
         }
-
+/*
         log.info("[" + getDescription().getName() + "] Version " + this.getDescription().getVersion() + " is being enabled!  Yay!  (Core version " + getCoreVersion() + ")");
 
 
@@ -106,7 +109,7 @@ public class Lockette extends PluginCore {
         else {
             log.info("[" + getDescription().getName() + "] Detected craftbukkit build [" + printBuild + "] ok.");
         }
-
+*/
 
 
         // Load properties and strings.
@@ -172,9 +175,9 @@ public class Lockette extends PluginCore {
                 //String msgString = Lockette.strings.getString("msg-admin-reload");
                 //selectiveBroadcast(Lockette.broadcastReloadTarget, ChatColor.RED + "Lockette: " + msgString);
             }
-            else if (args[0].equalsIgnoreCase("coredump")) {
+            /*else if (args[0].equalsIgnoreCase("coredump")) {
                 dumpCoreInfo();
-            }
+            }*/
         }
         //sender.sendMessage("Lockette: Test");
 

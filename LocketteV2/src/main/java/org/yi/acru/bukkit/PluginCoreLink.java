@@ -9,14 +9,14 @@ package org.yi.acru.bukkit;
 
 
 //Imports.
-import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
+//import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
 //import org.anjocaido.groupmanager.GroupManager;
 //import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
 import org.bukkit.plugin.Plugin;
 
 import com.gmail.nossr50.mcMMO;
 import com.griefcraft.lwc.LWCPlugin;
-import com.massivecraft.factions.P;
+import com.massivecraft.factions.Factions;
 //import com.nijiko.permissions.PermissionHandler;
 //import com.nijikokun.bukkit.Permissions.Permissions;
 import com.palmergames.bukkit.towny.Towny;
@@ -84,21 +84,20 @@ public class PluginCoreLink{
 		return(linkedPlugin.getDescription().getVersion());
 	}
 	//protected void setPlugin(Plugin target){plugin = target;}
-	
-	protected Vault getGroupManager(){return((GroupManager) linkedPlugin);}
-	protected Vault getPermissions(){return((Permissions) linkedPlugin);}
-	protected Vault getPermsBukkit(){return((PermissionsPlugin) linkedPlugin);}
+	protected Vault getGroupManager(){return((Vault) linkedPlugin);}
+	protected Vault getPermissions(){return((Vault) linkedPlugin);}
+	protected Vault getPermsBukkit(){return((Vault) linkedPlugin);}
 	protected Towny getTowny(){return((Towny) linkedPlugin);}
-	protected SimpleClans getSimpleClans(){return((SimpleClans) linkedPlugin);}
+	//protected SimpleClans getSimpleClans(){return((SimpleClans) linkedPlugin);}
 	protected mcMMO getMcmmo(){return((mcMMO) linkedPlugin);}
-	protected P getFactions(){return((P) linkedPlugin);}
+	protected Factions getFactions(){return((Factions) linkedPlugin);}
 	protected LWCPlugin getLWCPlugin(){return((LWCPlugin) linkedPlugin);}
 	
 	
 	// Data accessors.
 	
 	protected void setData(Object value){data = value;}
-	protected WorldsHolder getWorldsHolder(){return((WorldsHolder) data);}
-	protected Vault getPermissionHandler(){return((PermissionHandler) data);}
+	//protected WorldsHolder getWorldsHolder(){return((WorldsHolder) data);}
+	protected Vault getPermissionHandler(){return((Vault) data);}
 }
 

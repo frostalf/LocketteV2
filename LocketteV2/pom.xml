@@ -45,5 +45,29 @@
       <version>1.2.27-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>com.palmergames.towny</groupId>
+      <artifactId>towny</artifactId>
+      <version>0.84.0.4</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.griefcraft.lwc</groupId>
+      <artifactId>lwc</artifactId>
+      <version>4.3.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.gmail.nossr50.mcMMO</groupId>
+      <artifactId>mcMMO</artifactId>
+      <version>1.4.07-dev1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+        <groupId>com.massivecraft</groupId>
+        <artifactId>factions</artifactId>
+        <version>2.2.1</version>
+        <scope>provided</scope>
+    </dependency>
   </dependencies>
 </project>

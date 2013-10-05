@@ -18,7 +18,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.plugin.PluginManager;
-
 import org.yi.acru.lockettev2.*;
 
 public class LockettePrefixListener implements Listener {
@@ -54,7 +53,7 @@ public class LockettePrefixListener implements Listener {
 
             if (text.equalsIgnoreCase("[Private]") || text.equalsIgnoreCase(Lockette.altPrivate)
                     || text.equalsIgnoreCase("[More Users]") || text.equalsIgnoreCase(Lockette.altMoreUsers)) {
-
+/*
                 // Okay, sign already exists and someone managed to send an event to replace.
                 // Cancel it!  Also, set event text to sign text, just in case.
                 // And check for this later in queue.
@@ -64,7 +63,7 @@ public class LockettePrefixListener implements Listener {
                 event.setLine(2, sign.getLine(2));
                 event.setLine(3, sign.getLine(3));
                 Lockette.log.info("[" + plugin.getDescription().getName() + "] " + player.getName()
-                                  + " just tried to change a non-editable sign. (Bukkit bug, or plugin conflict?)");
+                                  + " just tried to change a non-editable sign. (Bukkit bug, or plugin conflict?)");*/
 
                 return;
             }

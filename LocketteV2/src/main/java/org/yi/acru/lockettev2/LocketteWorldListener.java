@@ -81,7 +81,9 @@ public class LocketteWorldListener implements Listener {
                 if ((block.getTypeId() == Material.CHEST.getId()) || (block.getTypeId() == Material.DISPENSER.getId())
                         || (block.getTypeId() == Material.FURNACE.getId())
                         || (block.getTypeId() == Material.BURNING_FURNACE.getId())
-                        || (block.getTypeId() == Material.BREWING_STAND.getId())) {
+                        || (block.getTypeId() == Material.BREWING_STAND.getId())
+                        || (block.getTypeId() == Material.HOPPER.getId())
+                        || (block.getTypeId() == Material.DROPPER.getId())) {
                     event.setCancelled(true);
 
                     return;

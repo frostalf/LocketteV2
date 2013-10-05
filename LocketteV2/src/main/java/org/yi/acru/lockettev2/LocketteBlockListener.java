@@ -31,7 +31,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.yi.acru.lockettev2.*;
-import org.yi.acru.bukkit.PluginCore;
 
 public class LocketteBlockListener implements Listener {
     
@@ -135,7 +134,7 @@ public class LocketteBlockListener implements Listener {
                 plugin.localizedMessage(player, null, "msg-user-release-owned", sign.getLine(1));
             }
             else if (text.equals("[more users]") || text.equalsIgnoreCase(Lockette.altMoreUsers)) {
-                Block checkBlock = Lockette.getSignAttachedBlock(block);
+                Block checkBlock = LocketteBlockFace.getSignAttachedBlock(block);
                 if (checkBlock == null) {
                     return;
                 }
@@ -226,9 +225,9 @@ public class LocketteBlockListener implements Listener {
 
         // The above misses doors at the end of the chain, in the space the blocks are being pushed into.
 
-        checkBlock = block.getRelative(Lockette.getPistonFacing(block), event.getLength() + 1);
-        Block checkBlock1 = block.getRelative(Lockette.getPistonFacing(block), event.getLength() + 2).getRelative(BlockFace.UP);
-        int type = block.getRelative(Lockette.getPistonFacing(block)).getTypeId();
+        checkBlock = block.getRelative(LocketteBlockFace.getPistonFacing(block), event.getLength() + 1);
+        Block checkBlock1 = block.getRelative(LocketteBlockFace.getPistonFacing(block), event.getLength() + 2).getRelative(BlockFace.UP);
+        int type = block.getRelative(LocketteBlockFace.getPistonFacing(block)).getTypeId();
         //added this check with pistons so you could not push any rail near the chest unless you own it
         if ((type == Material.ACTIVATOR_RAIL.getId()) || (type == Material.DETECTOR_RAIL.getId()) || (type == Material.POWERED_RAIL.getId()) || (type == Material.RAILS.getId()) || (type == Material.HOPPER_MINECART.getId())){
         if (Lockette.isProtected(checkBlock1)) {
@@ -250,7 +249,7 @@ public class LocketteBlockListener implements Listener {
         }
 
         Block block = event.getBlock();
-        Block checkBlock = block.getRelative(Lockette.getPistonFacing(block), 2);
+        Block checkBlock = block.getRelative(LocketteBlockFace.getPistonFacing(block), 2);
         Block checkBlock1 = block.getRelative(BlockFace.UP);
         int type = checkBlock.getTypeId();
 
@@ -350,7 +349,7 @@ public class LocketteBlockListener implements Listener {
 
         if (Lockette.directPlacement) {
             if (type == Material.WALL_SIGN.getId()) {
-                checkBlock = Lockette.getSignAttachedBlock(block);
+                checkBlock = LocketteBlockFace.getSignAttachedBlock(block);
 
                 if (checkBlock == null) {
                     return;
@@ -947,7 +946,7 @@ public class LocketteBlockListener implements Listener {
 
             if (Lockette.protectTrapDoors) {
                 if (typeWallSign) {
-                    checkBlock[3] = Lockette.getSignAttachedBlock(block);
+                    checkBlock[3] = LocketteBlockFace.getSignAttachedBlock(block);
                     if (checkBlock[3] != null) {
                         if (!isInList(checkBlock[3].getTypeId(), materialListBad)) {
                             checkBlock[0] = checkBlock[3].getRelative(BlockFace.NORTH);
@@ -977,7 +976,7 @@ public class LocketteBlockListener implements Listener {
 
             if (Lockette.protectDoors) {
                 if (typeWallSign) {
-                    checkBlock[0] = Lockette.getSignAttachedBlock(block);
+                    checkBlock[0] = LocketteBlockFace.getSignAttachedBlock(block);
                     if (checkBlock[0] != null) {
                         if (!isInList(checkBlock[0].getTypeId(), materialListBad)) {
                             checkBlock[1] = checkBlock[0].getRelative(BlockFace.UP);
@@ -1280,7 +1279,7 @@ public class LocketteBlockListener implements Listener {
 
             if (Lockette.protectDoors || Lockette.protectTrapDoors) {
                 if (typeWallSign) {
-                    checkBlock[0] = Lockette.getSignAttachedBlock(block);
+                    checkBlock[0] = LocketteBlockFace.getSignAttachedBlock(block);
                     if (checkBlock[0] != null) {
                         if (!isInList(checkBlock[0].getTypeId(), materialListBad)) {
                             signBlock = Lockette.findBlockOwner(checkBlock[0]);

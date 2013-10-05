@@ -28,6 +28,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import net.milkbowl.vault.Vault;
 import net.milkbowl.vault.VaultEco;
+import org.yi.acru.lockettev2.*;
 
 public class Lockette extends JavaPlugin {
 
@@ -57,7 +58,6 @@ public class Lockette extends JavaPlugin {
     public Lockette() {
         plugin = this;
     }
-
     @Override
     public void onLoad() {
     }
@@ -691,7 +691,7 @@ public class Lockette extends JavaPlugin {
                 return (true);
             }
             else if (text.equals("[more users]") || text.equalsIgnoreCase(altMoreUsers)) {
-                Block checkBlock = getSignAttachedBlock(block);
+                Block checkBlock = LocketteBlockFace.getSignAttachedBlock(block);
 
                 if (checkBlock != null) {
                     if (findBlockOwner(checkBlock) != null) {
@@ -722,7 +722,7 @@ public class Lockette extends JavaPlugin {
                 return (sign.getLine(1).replaceAll("(?i)\u00A7[0-F]", ""));
             }
             else if (text.equals("[more users]") || text.equalsIgnoreCase(altMoreUsers)) {
-                Block checkBlock = getSignAttachedBlock(block);
+                Block checkBlock = LocketteBlockFace.getSignAttachedBlock(block);
 
                 if (checkBlock != null) {
                     Block signBlock = findBlockOwner(checkBlock);
@@ -1145,7 +1145,7 @@ public class Lockette extends JavaPlugin {
             if (type == Material.TRAP_DOOR.getId()) {
 // Need to check block it is attached to as well as other attached trap doors.
 //return(findBlockOwnerBase(block, ignore, false, false, false, false, false));
-                return (findBlockOwner(getTrapDoorAttachedBlock(block), ignoreBlock, false));
+                return (findBlockOwner(LocketteBlockFace.getTrapDoorAttachedBlock(block), ignoreBlock, false));
             }
         }
         if (Lockette.protectDoors) {
@@ -1451,7 +1451,7 @@ public class Lockette extends JavaPlugin {
         }
         if (Lockette.protectTrapDoors) {
             if (type == Material.TRAP_DOOR.getId()) {
-                return (findBlockUsersBase(getTrapDoorAttachedBlock(block), false, false, false, true, 0));
+                return (findBlockUsersBase(LocketteBlockFace.getTrapDoorAttachedBlock(block), false, false, false, true, 0));
             }
         }
         if (Lockette.protectDoors) {

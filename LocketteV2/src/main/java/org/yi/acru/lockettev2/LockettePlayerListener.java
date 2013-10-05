@@ -115,7 +115,7 @@ public class LockettePlayerListener implements Listener {
                 else if (text.equals("[more users]") || text.equalsIgnoreCase(Lockette.altMoreUsers)) {
                     privateSign = false;
 
-                    Block checkBlock = Lockette.getSignAttachedBlock(block);
+                    Block checkBlock = LocketteBlockFace.getSignAttachedBlock(block);
                     if (checkBlock == null) {
                         plugin.localizedMessage(player, null, "msg-error-edit");
                         return;
@@ -419,7 +419,7 @@ public class LockettePlayerListener implements Listener {
          }
          */
         if (allow) {
-            List<Block> list = Lockette.toggleDoors(block, Lockette.getSignAttachedBlock(signBlock), wooden, trap);
+            List<Block> list = Lockette.toggleDoors(block, LocketteBlockFace.getSignAttachedBlock(signBlock), wooden, trap);
 
             int delta = Lockette.getSignOption(signBlock, "timer", Lockette.altTimer, Lockette.defaultDoorTimer);
 
@@ -456,7 +456,7 @@ public class LockettePlayerListener implements Listener {
         if (text.equals("[private]") || text.equalsIgnoreCase(Lockette.altPrivate)) {
         }
         else if (text.equals("[more users]") || text.equalsIgnoreCase(Lockette.altMoreUsers)) {
-            Block checkBlock = Lockette.getSignAttachedBlock(block);
+            Block checkBlock = LocketteBlockFace.getSignAttachedBlock(block);
             if (checkBlock == null) {
                 return;
             }

@@ -78,24 +78,6 @@ public class LockettePrefixListener implements Listener {
             return;
         }
 
-        /*
-         * // Alternative: Enforce a blank sign, as bukkit catches spoofed packets now.
-         * // No longer needed, as the findOwner now has an ignore block.
-         *
-         * if(typeWallSign || (block.getTypeId() == Material.SIGN_POST.getId())){
-         * Sign           sign = (Sign) block.getState();
-         * String         text = sign.getLine(0).replaceAll("(?i)\u00A7[0-F]", "").toLowerCase();
-         *
-         * if(text.equals("[private]") || text.equals(Lockette.altPrivate) || text.equals("[more users]") || text.equals(Lockette.altMoreUsers)){
-         * sign.setLine(0, "");
-         * sign.setLine(1, "");
-         * sign.setLine(2, "");
-         * sign.setLine(3, "");
-         * sign.update(true);
-         * }
-         * }
-         */
-
         // Colorizer code.
         if (Lockette.colorTags) {
             event.setLine(0, event.getLine(0).replaceAll("&([0-9A-Fa-f])", "\u00A7$1"));
@@ -105,6 +87,3 @@ public class LockettePrefixListener implements Listener {
         }
     }
 }
-
-
-//~ Formatted by Jindent --- http://www.jindent.com

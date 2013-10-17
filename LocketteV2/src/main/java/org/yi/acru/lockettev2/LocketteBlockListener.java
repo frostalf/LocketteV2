@@ -71,18 +71,18 @@ public class LocketteBlockListener implements Listener {
 
         Player player = event.getPlayer();
         Block block = event.getBlock();
-        int type = block.getTypeId();
+        Material type = block.getType();
 
         if (event.isCancelled()) {
-            if (type != Material.WOODEN_DOOR.getId()) {
+            if (type != Material.WOODEN_DOOR) {
                 return;
             }
         }
 
         // Someone is breaking a block, lets see if they are allowed.
 
-        if (type == Material.WALL_SIGN.getId()) {
-            if (block.getData() == 0) {
+        if (type == Material.WALL_SIGN) {
+            if (type == Material.AIR) {
                 // Fix for mcMMO error.
                 block.setData((byte) 5);
             }
@@ -186,7 +186,7 @@ public class LocketteBlockListener implements Listener {
                 else {
                     // Partial release for chest/doors, the sign may now be invalid for doors, but is always valid for chests.
 
-                    if ((type == Material.WOODEN_DOOR.getId()) || (type == Material.IRON_DOOR_BLOCK.getId())) {
+                    if ((type == Material.WOODEN_DOOR) || (type == Material.IRON_DOOR_BLOCK)) {
                         // Check for invalid signs somehow?
                         // But valid signs can be collided anyways... so probably doesn't matter.  (Unless this is prevented too.)
                     }
@@ -227,9 +227,13 @@ public class LocketteBlockListener implements Listener {
 
         checkBlock = block.getRelative(LocketteBlockFace.getPistonFacing(block), event.getLength() + 1);
         Block checkBlock1 = block.getRelative(LocketteBlockFace.getPistonFacing(block), event.getLength() + 2).getRelative(BlockFace.UP);
-        int type = block.getRelative(LocketteBlockFace.getPistonFacing(block)).getTypeId();
+        Material type = block.getRelative(LocketteBlockFace.getPistonFacing(block)).getType();
         //added this check with pistons so you could not push any rail near the chest unless you own it
-        if ((type == Material.ACTIVATOR_RAIL.getId()) || (type == Material.DETECTOR_RAIL.getId()) || (type == Material.POWERED_RAIL.getId()) || (type == Material.RAILS.getId()) || (type == Material.HOPPER_MINECART.getId())){
+        if ((type == Material.ACTIVATOR_RAIL) 
+                || (type == Material.DETECTOR_RAIL) 
+                || (type == Material.POWERED_RAIL) 
+                || (type == Material.RAILS) 
+                || (type == Material.HOPPER_MINECART)){
         if (Lockette.isProtected(checkBlock1)) {
             event.setCancelled(true);
             return;
@@ -251,31 +255,41 @@ public class LocketteBlockListener implements Listener {
         Block block = event.getBlock();
         Block checkBlock = block.getRelative(LocketteBlockFace.getPistonFacing(block), 2);
         Block checkBlock1 = block.getRelative(BlockFace.UP);
-        int type = checkBlock.getTypeId();
+        Material type = checkBlock.getType();
 
         // Skip those mats that cannot be pulled.
 
-        if (type == Material.CHEST.getId()) {
+        if (type == Material.CHEST) {
             return;
         }
-        if (type == Material.DISPENSER.getId()) {
+        if (type == Material.DISPENSER) {
             return;
         }
-        if (type == Material.FURNACE.getId()) {
+        if (type == Material.FURNACE) {
             return;
         }
-        if (type == Material.BURNING_FURNACE.getId()) {
+        if (type == Material.BURNING_FURNACE) {
             return;
         }
-        if (type == Material.WOODEN_DOOR.getId()) {
+        if (type == Material.WOODEN_DOOR) {
             return;
         }
-        if (type == Material.IRON_DOOR_BLOCK.getId()) {
+        if (type == Material.IRON_DOOR_BLOCK) {
+            return;
+        }
+        if (type == Material.TRAPPED_CHEST) {
+            return;
+        }
+        if (type == Material.BREWING_STAND){
             return;
         }
         //if(type == Material.TRAP_DOOR.getId()) don't return
 
-        if((type == Material.ACTIVATOR_RAIL.getId()) || (type == Material.DETECTOR_RAIL.getId()) || (type == Material.POWERED_RAIL.getId()) || (type == Material.RAILS.getId()) || (type == Material.HOPPER_MINECART.getId())){
+        if((type == Material.ACTIVATOR_RAIL) 
+                || (type == Material.DETECTOR_RAIL) 
+                || (type == Material.POWERED_RAIL) 
+                || (type == Material.RAILS) 
+                || (type == Material.HOPPER_MINECART)){
             
         if (Lockette.isProtected(checkBlock1)) {
             event.setCancelled(true);
@@ -295,8 +309,14 @@ public class LocketteBlockListener implements Listener {
         }
         Location chest = event.getTo().add(0, 1, 0);
         Block checkBlock = chest.getBlock();
-        int type = checkBlock.getTypeId();
-        if((type == Material.CHEST.getId()) || (type == Material.DISPENSER.getId()) || (type == Material.FURNACE.getId()) || (type == Material.WOODEN_DOOR.getId()) || (type == Material.BURNING_FURNACE.getId()) || (type == Material.IRON_DOOR_BLOCK.getId())){
+        Material type = checkBlock.getType();
+        if((type == Material.CHEST) 
+                || (type == Material.DISPENSER) 
+                || (type == Material.FURNACE) 
+                || (type == Material.WOODEN_DOOR) 
+                || (type == Material.BURNING_FURNACE) 
+                || (type == Material.IRON_DOOR_BLOCK)
+                || (type == Material.TRAPPED_CHEST)){
             if (Lockette.isProtected(checkBlock)) {
             event.getVehicle().remove();
         }            
@@ -313,19 +333,22 @@ public class LocketteBlockListener implements Listener {
 
         Player player = event.getPlayer();
         Block block = event.getBlockPlaced();
-        int type = block.getTypeId();
+        Material type = block.getType();
         Block against = event.getBlockAgainst();
         Block checkBlock;
         Block signBlock;
 
         // Check if someone accidentally put any block on an owned sign.
 
-        if (against.getTypeId() == Material.WALL_SIGN.getId()) {
+        if (against.getType() == Material.WALL_SIGN) {
             // Only cancel it for our signs.
             Sign sign = (Sign) against.getState();
             String text = sign.getLine(0).replaceAll("(?i)\u00A7[0-F]", "").toLowerCase();
 
-            if (text.equals("[private]") || text.equalsIgnoreCase(Lockette.altPrivate) || text.equals("[more users]") || text.equalsIgnoreCase(Lockette.altMoreUsers)) {
+            if (text.equals("[private]") 
+                    || text.equalsIgnoreCase(Lockette.altPrivate) 
+                    || text.equals("[more users]") 
+                    || text.equalsIgnoreCase(Lockette.altMoreUsers)) {
                 event.setCancelled(true);
                 return;
             }
@@ -334,7 +357,10 @@ public class LocketteBlockListener implements Listener {
         // Check the placing of a door by a door here.
         // Though it is usually an item, not a block?  Is this still needed?
 
-        if ((type == Material.WOODEN_DOOR.getId()) || (type == Material.IRON_DOOR_BLOCK.getId()) || (type == Material.TRAP_DOOR.getId()) || (type == Material.FENCE_GATE.getId())) {
+        if ((type == Material.WOODEN_DOOR) 
+                || (type == Material.IRON_DOOR_BLOCK) 
+                || (type == Material.TRAP_DOOR) 
+                || (type == Material.FENCE_GATE)) {
             //player.sendMessage(ChatColor.DARK_PURPLE + "Lockette: Door block block has been placed");
 
             if (canBuildDoor(block, against, player)) {
@@ -348,16 +374,22 @@ public class LocketteBlockListener implements Listener {
         }
 
         if (Lockette.directPlacement) {
-            if (type == Material.WALL_SIGN.getId()) {
+            if (type == Material.WALL_SIGN) {
                 checkBlock = LocketteBlockFace.getSignAttachedBlock(block);
 
                 if (checkBlock == null) {
                     return;
                 }
 
-                type = checkBlock.getTypeId();
+                type = checkBlock.getType();
 
-                if ((type == Material.CHEST.getId()) || (type == Material.DISPENSER.getId()) || (type == Material.FURNACE.getId()) || (type == Material.BURNING_FURNACE.getId()) || (type == Material.BREWING_STAND.getId()) || Lockette.isInList(type, Lockette.customBlockList)) {
+                if ((type == Material.CHEST) 
+                        || (type == Material.DISPENSER) 
+                        || (type == Material.FURNACE) 
+                        || (type == Material.BURNING_FURNACE) 
+                        || (type == Material.BREWING_STAND)
+                        || (type == Material.TRAPPED_CHEST)
+                        || Lockette.isInList(type, Lockette.customBlockList)) {
 
                     Sign sign = (Sign) block.getState();
                     int length = player.getName().length();
@@ -409,7 +441,7 @@ public class LocketteBlockListener implements Listener {
 
         // The rest is for chests and hoppers only.		
 
-        if (type == Material.CHEST.getId()) {
+        if (type == Material.CHEST) {
 
             // Count nearby chests to find illegal sized chests.
 
@@ -458,12 +490,17 @@ public class LocketteBlockListener implements Listener {
 
         // Hoppers from here.
 
-        if ((type == Material.HOPPER.getId())) {
+        if ((type == Material.HOPPER)) {
 
             checkBlock = block.getRelative(BlockFace.UP);
-            type = checkBlock.getTypeId();
+            type = checkBlock.getType();
 
-            if ((type == Material.CHEST.getId()) || (type == Material.DISPENSER.getId()) || (type == Material.FURNACE.getId()) || (type == Material.BURNING_FURNACE.getId()) || (type == Material.BREWING_STAND.getId()) || Lockette.isInList(type, Lockette.customBlockList)) {
+            if ((type == Material.CHEST) 
+                    || (type == Material.DISPENSER) 
+                    || (type == Material.FURNACE) 
+                    || (type == Material.BURNING_FURNACE) 
+                    || (type == Material.BREWING_STAND) 
+                    || Lockette.isInList(type, Lockette.customBlockList)) {
 
                 if (!validateOwner(checkBlock, player)) {
 
@@ -475,9 +512,14 @@ public class LocketteBlockListener implements Listener {
             }
 
             checkBlock = block.getRelative(BlockFace.DOWN);
-            type = checkBlock.getTypeId();
+            type = checkBlock.getType();
 
-            if ((type == Material.CHEST.getId()) || (type == Material.DISPENSER.getId()) || (type == Material.FURNACE.getId()) || (type == Material.BURNING_FURNACE.getId()) || (type == Material.BREWING_STAND.getId()) || Lockette.isInList(type, Lockette.customBlockList)) {
+            if ((type == Material.CHEST) 
+                    || (type == Material.DISPENSER) 
+                    || (type == Material.FURNACE) 
+                    || (type == Material.BURNING_FURNACE) 
+                    || (type == Material.BREWING_STAND) 
+                    || Lockette.isInList(type, Lockette.customBlockList)) {
 
                 if (!validateOwner(checkBlock, player)) {
 
@@ -488,19 +530,28 @@ public class LocketteBlockListener implements Listener {
             }
         }
         // Way to stop minecart hoppers
-        if ((type == Material.POWERED_RAIL.getId()) || (type == Material.RAILS.getId()) || (type == Material.ACTIVATOR_RAIL.getId()) || (type == Material.DETECTOR_RAIL.getId())){
+        if ((type == Material.POWERED_RAIL) 
+                || (type == Material.RAILS) 
+                || (type == Material.ACTIVATOR_RAIL) 
+                || (type == Material.DETECTOR_RAIL)){
             checkBlock = block.getRelative(BlockFace.UP);
             Block checkBlock1 = checkBlock.getRelative(BlockFace.EAST);
             Block checkBlock2 = checkBlock.getRelative(BlockFace.WEST);
             Block checkBlock3 = checkBlock.getRelative(BlockFace.NORTH);
             Block checkBlock4 = checkBlock.getRelative(BlockFace.SOUTH);
-            int type1 = checkBlock1.getTypeId();
-            int type2 = checkBlock2.getTypeId();
-            int type3 = checkBlock3.getTypeId();
-            int type4 = checkBlock4.getTypeId();
-            type = checkBlock.getTypeId();
+            Material type1 = checkBlock1.getType();
+            Material type2 = checkBlock2.getType();
+            Material type3 = checkBlock3.getType();
+            Material type4 = checkBlock4.getType();
+            type = checkBlock.getType();
 
-            if ((type == Material.CHEST.getId()) || (type == Material.DISPENSER.getId()) || (type == Material.FURNACE.getId()) || (type == Material.BURNING_FURNACE.getId()) || (type == Material.BREWING_STAND.getId()) || Lockette.isInList(type, Lockette.customBlockList)) {
+            if ((type == Material.CHEST) 
+                    || (type == Material.DISPENSER) 
+                    || (type == Material.FURNACE) 
+                    || (type == Material.BURNING_FURNACE) 
+                    || (type == Material.BREWING_STAND) 
+                    || (type == Material.TRAPPED_CHEST)
+                    || Lockette.isInList(type, Lockette.customBlockList)) {
 
                 if (!validateOwner(checkBlock, player)) {
 
@@ -510,7 +561,13 @@ public class LocketteBlockListener implements Listener {
                     return;
                 }
             }
-                        if ((type1 == Material.CHEST.getId()) || (type1 == Material.DISPENSER.getId()) || (type1 == Material.FURNACE.getId()) || (type1 == Material.BURNING_FURNACE.getId()) || (type1 == Material.BREWING_STAND.getId()) || Lockette.isInList(type1, Lockette.customBlockList)) {
+                        if ((type1 == Material.CHEST) 
+                                || (type1 == Material.DISPENSER) 
+                                || (type1 == Material.FURNACE) 
+                                || (type1 == Material.BURNING_FURNACE) 
+                                || (type1 == Material.TRAPPED_CHEST)
+                                || (type1 == Material.BREWING_STAND) 
+                                || Lockette.isInList(type1, Lockette.customBlockList)) {
 
                 if (!validateOwner(checkBlock1, player)) {
 
@@ -520,7 +577,13 @@ public class LocketteBlockListener implements Listener {
                     return;
                 }
             }
-                        if ((type2 == Material.CHEST.getId()) || (type2 == Material.DISPENSER.getId()) || (type2 == Material.FURNACE.getId()) || (type2 == Material.BURNING_FURNACE.getId()) || (type2 == Material.BREWING_STAND.getId()) || Lockette.isInList(type2, Lockette.customBlockList)) {
+                        if ((type2 == Material.CHEST) 
+                                || (type2 == Material.DISPENSER) 
+                                || (type2 == Material.FURNACE) 
+                                || (type2 == Material.BURNING_FURNACE) 
+                                || (type2 == Material.BREWING_STAND) 
+                                || (type2 == Material.TRAPPED_CHEST)
+                                || Lockette.isInList(type2, Lockette.customBlockList)) {
 
                 if (!validateOwner(checkBlock2, player)) {
 
@@ -530,7 +593,13 @@ public class LocketteBlockListener implements Listener {
                     return;
                 }
             }
-                      if ((type3 == Material.CHEST.getId()) || (type3 == Material.DISPENSER.getId()) || (type3 == Material.FURNACE.getId()) || (type3 == Material.BURNING_FURNACE.getId()) || (type3 == Material.BREWING_STAND.getId()) || Lockette.isInList(type3, Lockette.customBlockList)) {
+                      if ((type3 == Material.CHEST) 
+                              || (type3 == Material.DISPENSER) 
+                              || (type3 == Material.FURNACE) 
+                              || (type3 == Material.BURNING_FURNACE) 
+                              || (type3 == Material.BREWING_STAND) 
+                              || (type3 == Material.TRAPPED_CHEST)
+                              || Lockette.isInList(type3, Lockette.customBlockList)) {
 
                 if (!validateOwner(checkBlock3, player)) {
 
@@ -540,7 +609,13 @@ public class LocketteBlockListener implements Listener {
                     return;
                 }
             }
-                      if ((type4 == Material.CHEST.getId()) || (type4 == Material.DISPENSER.getId()) || (type4 == Material.FURNACE.getId()) || (type4 == Material.BURNING_FURNACE.getId()) || (type4 == Material.BREWING_STAND.getId()) || Lockette.isInList(type4, Lockette.customBlockList)) {
+                      if ((type4 == Material.CHEST) 
+                              || (type4 == Material.DISPENSER) 
+                              || (type4 == Material.FURNACE) 
+                              || (type4 == Material.BURNING_FURNACE) 
+                              || (type4 == Material.BREWING_STAND) 
+                              || (type4 == Material.TRAPPED_CHEST)
+                              || Lockette.isInList(type4, Lockette.customBlockList)) {
 
                 if (!validateOwner(checkBlock4, player)) {
 
@@ -551,7 +626,7 @@ public class LocketteBlockListener implements Listener {
             }
         }
     }
-   /*
+/*
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerInteract(PlayerInteractEvent event){
             
@@ -578,7 +653,7 @@ public class LocketteBlockListener implements Listener {
             }
         }
     }
-    */
+  */
     /**
      * Check permissions and external sources to see if we are allowed to place
      * a private sign here
@@ -672,49 +747,24 @@ public class LocketteBlockListener implements Listener {
         // Owner doesn't match so deny.
         return false;
     }
-
-    /*
-     * BukkitMulti public void onBlockRightClick(BlockRightClickEvent event){
-     * Block block = event.getBlock(); int type = block.getTypeId();
-     * 
-     * 
-     * // Right clicking a door here.
-     * 
-     * if(Lockette.protectTrapDoors) if(type == Material.TRAP_DOOR.getId()){
-     * Player player = event.getPlayer();
-     * 
-     * rightclickDoor(block, player); return; }
-     * 
-     * if(Lockette.protectDoors) if((type == Material.WOODEN_DOOR.getId()) ||
-     * (type == Material.IRON_DOOR_BLOCK.getId()) || (type ==
-     * Material.FENCE_GATE.getId())){ Player player = event.getPlayer();
-     * 
-     * rightclickDoor(block, player); return; }
-     * 
-     * 
-     * // The rest is for wall signs only.
-     * 
-     * if(type != Material.WALL_SIGN.getId()) return;
-     * 
-     * Player player = event.getPlayer();
-     * 
-     * rightclickSign(block, player); }
-     */
+    
     @EventHandler(priority = EventPriority.HIGH)
     public void onBlockRedstoneChange(BlockRedstoneEvent event) {
 
         Block block = event.getBlock();
-        int type = block.getTypeId();
+        Material type = block.getType();
         boolean doCheck = false;
 
         if (Lockette.protectTrapDoors) {
-            if (type == Material.TRAP_DOOR.getId()) {
+            if (type == Material.TRAP_DOOR) {
                 doCheck = true;
             }
         }
 
         if (Lockette.protectDoors) {
-            if ((type == Material.WOODEN_DOOR.getId()) || (type == Material.IRON_DOOR_BLOCK.getId()) || (type == Material.FENCE_GATE.getId())) {
+            if ((type == Material.WOODEN_DOOR) 
+                    || (type == Material.IRON_DOOR_BLOCK) 
+                    || (type == Material.FENCE_GATE)) {
                 doCheck = true;
             }
         }
@@ -775,32 +825,8 @@ public class LocketteBlockListener implements Listener {
 
         Player player = event.getPlayer();
         Block block = event.getBlock();
-        boolean typeWallSign = (block.getTypeId() == Material.WALL_SIGN.getId());
-        boolean typeSignPost = (block.getTypeId() == Material.SIGN_POST.getId());
-
-        /*
-         * // Check to see if it is a sign change packet for an existing
-         * protected sign. // No longer needed in builds around 556+, but I am
-         * leaving this here for now. // Needed again as of build 1093... :< //
-         * Moved to PrefixListener
-         * 
-         * if(typeWallSign){ Sign sign = (Sign) block.getState(); String text =
-         * sign.getLine(0).replaceAll("(?i)\u00A7[0-F]", "");
-         * 
-         * if(text.equalsIgnoreCase("[Private]") ||
-         * text.equalsIgnoreCase(Lockette.altPrivate) ||
-         * text.equalsIgnoreCase("[More Users]") ||
-         * text.equalsIgnoreCase(Lockette.altMoreUsers)){
-         * //if(!sign.getLine(1).replaceAll("(?i)\u00A7[0-F]", "").isEmpty()){
-         * // Need to set canceled to false and set event text, as the sign is
-         * cleared otherwise. event.setCancelled(false); event.setLine(0,
-         * sign.getLine(0)); event.setLine(1, sign.getLine(1)); event.setLine(2,
-         * sign.getLine(2)); event.setLine(3, sign.getLine(3));
-         * Lockette.log.info("[" + plugin.getDescription().getName() + "] " +
-         * player.getName() +
-         * " just tried to change a non-editable sign. (Bukkit bug, or plugin conflict?  Disable MinecartManiaAdminControls.)"
-         * ); return; } }
-         */
+        boolean typeWallSign = (block.getType() == Material.WALL_SIGN);
+        boolean typeSignPost = (block.getType() == Material.SIGN_POST);
 
         // But also need this along with stuff in PrefixListener
 
@@ -808,7 +834,10 @@ public class LocketteBlockListener implements Listener {
             Sign sign = (Sign) block.getState();
             String text = sign.getLine(0).replaceAll("(?i)\u00A7[0-F]", "");
 
-            if (text.equalsIgnoreCase("[Private]") || text.equalsIgnoreCase(Lockette.altPrivate) || text.equalsIgnoreCase("[More Users]") || text.equalsIgnoreCase(Lockette.altMoreUsers)) {
+            if (text.equalsIgnoreCase("[Private]") 
+                    || text.equalsIgnoreCase(Lockette.altPrivate) 
+                    || text.equalsIgnoreCase("[More Users]") 
+                    || text.equalsIgnoreCase(Lockette.altMoreUsers)) {
                 if (event.isCancelled()) {
                     return;
                 }
@@ -823,33 +852,6 @@ public class LocketteBlockListener implements Listener {
             event.setCancelled(true);
             return;
         }
-
-        /*
-         * // Alternative: Enforce a blank sign, as bukkit catches spoofed
-         * packets now. // No longer needed, as the findOwner now has an ignore
-         * block.
-         * 
-         * if(typeWallSign || (block.getTypeId() ==
-         * Material.SIGN_POST.getId())){ Sign sign = (Sign) block.getState();
-         * String text = sign.getLine(0).replaceAll("(?i)\u00A7[0-F]",
-         * "").toLowerCase();
-         * 
-         * if(text.equals("[private]") || text.equals(Lockette.altPrivate) ||
-         * text.equals("[more users]") || text.equals(Lockette.altMoreUsers)){
-         * sign.setLine(0, ""); sign.setLine(1, ""); sign.setLine(2, "");
-         * sign.setLine(3, ""); sign.update(true); } }
-         */
-        /*
-         * // Colorizer code. // Moved to PrefixListener
-         * 
-         * if(Lockette.colorTags){ event.setLine(0,
-         * event.getLine(0).replaceAll("&([0-9A-Fa-f])", "\u00A7$1"));
-         * event.setLine(1, event.getLine(1).replaceAll("&([0-9A-Fa-f])",
-         * "\u00A7$1")); event.setLine(2,
-         * event.getLine(2).replaceAll("&([0-9A-Fa-f])", "\u00A7$1"));
-         * event.setLine(3, event.getLine(3).replaceAll("&([0-9A-Fa-f])",
-         * "\u00A7$1")); }
-         */
 
         // Check for a new [Private] or [More Users] sign.
 
@@ -954,7 +956,7 @@ public class LocketteBlockListener implements Listener {
                             checkBlock[2] = checkBlock[3].getRelative(BlockFace.SOUTH);
                             checkBlock[3] = checkBlock[3].getRelative(BlockFace.WEST);
                             for (x = 0; x < 4; ++x) {
-                                if (checkBlock[x].getTypeId() == Material.TRAP_DOOR.getId()) {
+                                if (checkBlock[x].getType() == Material.TRAP_DOOR) {
                                     if (Lockette.findBlockOwner(checkBlock[x], block, true) == null) {
                                         if (!doTrapDoors) {
                                             deny = true;
@@ -1055,7 +1057,7 @@ public class LocketteBlockListener implements Listener {
                     }
 
                     // Check if allowed by type.
-                    if (checkBlock[x].getTypeId() == Material.CHEST.getId()) {
+                    if (checkBlock[x].getType() == Material.CHEST) {
                         if (!doChests) {
                             deny = true;
                             continue;
@@ -1069,14 +1071,14 @@ public class LocketteBlockListener implements Listener {
                         }
                         lastType = 2;
                     }
-                    else if (checkBlock[x].getTypeId() == Material.DISPENSER.getId()) {
+                    else if (checkBlock[x].getType() == Material.DISPENSER) {
                         if (!doDispensers) {
                             deny = true;
                             continue;
                         }
                         lastType = 3;
                     }
-                    else if (checkBlock[x].getTypeId() == Material.BREWING_STAND.getId()) {
+                    else if (checkBlock[x].getType() == Material.BREWING_STAND) {
                         if (!doBrewingStands) {
                             deny = true;
                             continue;
@@ -1090,7 +1092,7 @@ public class LocketteBlockListener implements Listener {
                         }
                         lastType = 7;
                     }
-                    else if (checkBlock[x].getTypeId() == Material.TRAP_DOOR.getId()) {
+                    else if (checkBlock[x].getType() == Material.TRAP_DOOR) {
                         if (!Lockette.protectTrapDoors) {
                             continue;
                         }
@@ -1124,7 +1126,7 @@ public class LocketteBlockListener implements Listener {
                     else {
                         if (Lockette.protectTrapDoors) {
                             if (doTrapDoors) {
-                                if (checkBlock[x].getTypeId() == Material.TRAP_DOOR.getId()) {
+                                if (checkBlock[x].getType() == Material.TRAP_DOOR) {
                                     conflict = true;
                                 }
                             }
@@ -1311,7 +1313,7 @@ public class LocketteBlockListener implements Listener {
                     }
 
                     if (!Lockette.protectTrapDoors) {
-                        if (checkBlock[x].getTypeId() == Material.TRAP_DOOR.getId()) {
+                        if (checkBlock[x].getType() == Material.TRAP_DOOR) {
                             continue;
                         }
                     }
@@ -1398,7 +1400,7 @@ public class LocketteBlockListener implements Listener {
         }
 
         if (Lockette.protectTrapDoors) {
-            if (block.getTypeId() == Material.TRAP_DOOR.getId()) {
+            if (block.getType() == Material.TRAP_DOOR) {
                 //if(!Lockette.isOwner(Lockette.getTrapDoorAttachedBlock(block), player.getName())) return(false);
                 //if(!Lockette.isOwner(block, player.getName())) return(false); // Failed as block data is bad, same as above.
                 //if(!Lockette.isOwner(against, player.getName())) return(false);
@@ -1415,28 +1417,28 @@ public class LocketteBlockListener implements Listener {
         // Check neighboring doors.
 
         checkBlock = block.getRelative(BlockFace.NORTH);
-        if (checkBlock.getTypeId() == block.getTypeId()) {
+        if (checkBlock.getType() == block.getType()) {
             if (!Lockette.isOwner(checkBlock, player.getName())) {
                 return (false);
             }
         }
 
         checkBlock = block.getRelative(BlockFace.EAST);
-        if (checkBlock.getTypeId() == block.getTypeId()) {
+        if (checkBlock.getType() == block.getType()) {
             if (!Lockette.isOwner(checkBlock, player.getName())) {
                 return (false);
             }
         }
 
         checkBlock = block.getRelative(BlockFace.SOUTH);
-        if (checkBlock.getTypeId() == block.getTypeId()) {
+        if (checkBlock.getType() == block.getType()) {
             if (!Lockette.isOwner(checkBlock, player.getName())) {
                 return (false);
             }
         }
 
         checkBlock = block.getRelative(BlockFace.WEST);
-        if (checkBlock.getTypeId() == block.getTypeId()) {
+        if (checkBlock.getType() == block.getType()) {
             if (!Lockette.isOwner(checkBlock, player.getName())) {
                 return (false);
             }

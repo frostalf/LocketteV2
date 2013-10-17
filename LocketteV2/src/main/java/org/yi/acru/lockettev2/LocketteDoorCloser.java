@@ -10,8 +10,7 @@ package org.yi.acru.lockettev2;
 
 import org.bukkit.World;
 import org.bukkit.block.Block;
-
-import org.yi.acru.lockettev2.*;
+//import org.yi.acru.lockettev2.*;
 
 //~--- JDK imports ------------------------------------------------------------
 
@@ -22,8 +21,8 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class LocketteDoorCloser implements Runnable {
-    private static int                     doorTask = -1;
-    private static Lockette                plugin;
+    private static int doorTask = -1;
+    private static Lockette plugin;
     private final PriorityQueue<closeTask> closeTaskList = new PriorityQueue<>();
 
     public LocketteDoorCloser(Lockette instance) {

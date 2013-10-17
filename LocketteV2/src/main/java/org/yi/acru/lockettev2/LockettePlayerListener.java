@@ -23,7 +23,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
-import org.yi.acru.lockettev2.*;
+//import org.yi.acru.lockettev2.*;
 
 public class LockettePlayerListener implements Listener {
 
@@ -86,7 +86,10 @@ public class LockettePlayerListener implements Listener {
 
         // Edit sign text.
         if ((command.length == 2) || (command.length == 3)) {
-            if (command[1].equals("1") || command[1].equals("2") || command[1].equals("3") || command[1].equals("4")) {
+            if (command[1].equals("1") 
+                    || command[1].equals("2") 
+                    || command[1].equals("3") 
+                    || command[1].equals("4")) {
                 Block block = plugin.playerList.get(player.getName());
                 //boolean		error = false;
 
@@ -214,14 +217,14 @@ public class LockettePlayerListener implements Listener {
         Action action = event.getAction();
         Player player = event.getPlayer();
         Block block = event.getClickedBlock();
-        int type = block.getTypeId();
+        Material type = block.getType();
         BlockFace face = event.getBlockFace();
         ItemStack item;
 
 
         if (action == Action.RIGHT_CLICK_BLOCK) {
             if (Lockette.protectTrapDoors) {
-                if (type == Material.TRAP_DOOR.getId()) {
+                if (type == Material.TRAP_DOOR) {
                     if (interactDoor(block, player)) {
                         return;
                     }
@@ -232,7 +235,9 @@ public class LockettePlayerListener implements Listener {
             }
 
             if (Lockette.protectDoors) {
-                if ((type == Material.WOODEN_DOOR.getId()) || (type == Material.IRON_DOOR_BLOCK.getId()) || (type == materialFenceGate)) {
+                if ((type == Material.WOODEN_DOOR) 
+                        || (type == Material.IRON_DOOR_BLOCK) 
+                        || (type == Material.FENCE_GATE)) {
                     if (interactDoor(block, player)) {
                         return;
                     }
@@ -242,29 +247,33 @@ public class LockettePlayerListener implements Listener {
                 }
             }
 
-            if (type == Material.WALL_SIGN.getId()) {
+            if (type == Material.WALL_SIGN) {
                 interactSign(block, player);
                 return;
             }
 
-            if (type == Material.CHEST.getId()) {
+            if (type == Material.CHEST) {
                 // Try at making a 1.7->1.8 chest fixer.
                 Lockette.rotateChestOrientation(block, face);
             }
 
-            if ((type == Material.CHEST.getId()) || (type == Material.DISPENSER.getId())
-                    || (type == Material.FURNACE.getId()) || (type == Material.BURNING_FURNACE.getId())
-                    || (type == Material.BREWING_STAND.getId()) || Lockette.isInList(type, Lockette.customBlockList)) {
+            if ((type == Material.CHEST) 
+                    || (type == Material.DISPENSER)
+                    || (type == Material.FURNACE) 
+                    || (type == Material.BURNING_FURNACE)
+                    || (type == Material.BREWING_STAND) 
+                    || (type == Material.TRAPPED_CHEST)
+                    || Lockette.isInList(type, Lockette.customBlockList)) {
 
                 // Trying something out....
                 if (Lockette.directPlacement) {
                     if (event.hasItem()) {
                         if ((face != BlockFace.UP) && (face != BlockFace.DOWN)) {
                             item = event.getItem();
-                            if (item.getTypeId() == Material.SIGN.getId()) {
+                            if (item.getType() == Material.SIGN) {
                                 Block checkBlock = block.getRelative(face);
-                                type = checkBlock.getTypeId();
-                                if (type == Material.AIR.getId()) {
+                                type = checkBlock.getType();
+                                if (type == Material.AIR) {
                                     boolean place = false;
                                     if (Lockette.isProtected(block)) {
                                         if (Lockette.isOwner(block, player.getName())) {
@@ -297,19 +306,24 @@ public class LockettePlayerListener implements Listener {
                 return;
             }
 
-            if (type == Material.DIRT.getId()) {
+            if (type == Material.DIRT) {
                 if (event.hasItem()) {
                     item = event.getItem();
 
-                    type = item.getTypeId();
+                    type = item.getType();
 
-                    if ((type == Material.DIAMOND_HOE.getId()) || (type == Material.GOLD_HOE.getId()) || (type == Material.IRON_HOE.getId())
-                            || (type == Material.STONE_HOE.getId()) || (type == Material.WOOD_HOE.getId())) {
+                    if ((type == Material.DIAMOND_HOE) 
+                            || (type == Material.GOLD_HOE) 
+                            || (type == Material.IRON_HOE)
+                            || (type == Material.STONE_HOE) 
+                            || (type == Material.WOOD_HOE)) {
                         Block checkBlock = block.getRelative(BlockFace.UP);
 
-                        type = checkBlock.getTypeId();
+                        type = checkBlock.getType();
 
-                        if ((type == Material.WOODEN_DOOR.getId()) || (type == Material.IRON_DOOR_BLOCK.getId()) || (type == materialFenceGate)) {
+                        if ((type == Material.WOODEN_DOOR) 
+                                || (type == Material.IRON_DOOR_BLOCK) 
+                                || (type == Material.FENCE_GATE)) {
                             event.setUseInteractedBlock(Result.DENY);
                             return;
                         }
@@ -324,7 +338,7 @@ public class LockettePlayerListener implements Listener {
         }
         else if (action == Action.LEFT_CLICK_BLOCK) {
             if (Lockette.protectTrapDoors) {
-                if (type == Material.TRAP_DOOR.getId()) {
+                if (type == Material.TRAP_DOOR) {
                     if (interactDoor(block, player)) {
                         return;
                     }
@@ -335,7 +349,9 @@ public class LockettePlayerListener implements Listener {
             }
 
             if (Lockette.protectDoors) {
-                if ((type == Material.WOODEN_DOOR.getId()) || (type == Material.IRON_DOOR_BLOCK.getId()) || (type == materialFenceGate)) {
+                if ((type == Material.WOODEN_DOOR) 
+                        || (type == Material.IRON_DOOR_BLOCK) 
+                        || (type == Material.FENCE_GATE)) {
                     if (interactDoor(block, player)) {
                         return;
                     }
@@ -364,14 +380,14 @@ public class LockettePlayerListener implements Listener {
             return (true);
         }
 
-        boolean wooden = (block.getTypeId() == Material.WOODEN_DOOR.getId());
+        boolean wooden = (block.getType() == Material.WOODEN_DOOR);
         boolean trap = false;
 
-        if (block.getTypeId() == materialFenceGate) {
+        if (block.getType() == Material.FENCE_GATE) {
             wooden = true;
         }
         if (Lockette.protectTrapDoors) {
-            if (block.getTypeId() == Material.TRAP_DOOR.getId()) {
+            if (block.getType() == Material.TRAP_DOOR) {
                 wooden = true;
                 trap = true;
             }
@@ -386,38 +402,6 @@ public class LockettePlayerListener implements Listener {
             allow = true;
         }
 
-        /*
-         // Fee stuff...
-         if(!allow){
-         // Check if we can pay a fee to activate.
-         int fee = getSignOption(signBlock, "fee", Lockette.altFee, 0);
-			
-         if(signBlock.equals(plugin.playerList.get(player.getName()))){
-         if(fee == 0){
-         player.sendMessage("unable to pay fee");
-         }
-         else{
-         player.sendMessage("Fee of " +plugin.economyFormat(fee)+" paid (fake)");
-         plugin.playerList.put(player.getName(), block);
-         allow = true;
-         }
-         /
-         if(fee != 0){
-         Sign		sign = (Sign) signBlock.getState();
-         String		text = sign.getLine(1).replaceAll("(?i)\u00A7[0-F]", "");
-					
-         if(plugin.economyTransfer(player.getName(), text, fee)){
-         allow = true;
-         plugin.playerList.put(player.getName(), block);
-         }
-         else{}
-         }/
-         }
-         else if(fee != 0){
-         player.sendMessage("first touch sign to pay fee.");
-         }
-         }
-         */
         if (allow) {
             List<Block> list = Lockette.toggleDoors(block, LocketteBlockFace.getSignAttachedBlock(signBlock), wooden, trap);
 
@@ -648,20 +632,22 @@ public class LockettePlayerListener implements Listener {
     // Returns true if a door wasn't changed.
     private static boolean fixDoor(Player player) {
         Block block = player.getTargetBlock(null, 10);
-        int type = block.getTypeId();
+        Material type = block.getType();
         boolean doCheck = false;
 
 
         // Check if the block being looked at is a door block.
 
         if (Lockette.protectTrapDoors) {
-            if (type == Material.TRAP_DOOR.getId()) {
+            if (type == Material.TRAP_DOOR) {
                 doCheck = true;
             }
         }
 
         if (Lockette.protectDoors) {
-            if ((type == Material.WOODEN_DOOR.getId()) || (type == Material.IRON_DOOR_BLOCK.getId()) || (type == materialFenceGate)) {
+            if ((type == Material.WOODEN_DOOR) 
+                    || (type == Material.IRON_DOOR_BLOCK) 
+                    || (type == Material.FENCE_GATE)) {
                 doCheck = true;
             }
         }
@@ -695,12 +681,12 @@ public class LockettePlayerListener implements Listener {
 
     public static boolean hasAttachedTrapDoor(Block block) {
         Block checkBlock;
-        int type;
+        Material type;
         int face;
 
         checkBlock = block.getRelative(BlockFace.NORTH);
-        type = checkBlock.getTypeId();
-        if (type == Material.TRAP_DOOR.getId()) {
+        type = checkBlock.getType();
+        if (type == Material.TRAP_DOOR) {
             face = checkBlock.getData() & 0x3;
             if (face == 2) {
                 return (true);
@@ -708,8 +694,8 @@ public class LockettePlayerListener implements Listener {
         }
 
         checkBlock = block.getRelative(BlockFace.EAST);
-        type = checkBlock.getTypeId();
-        if (type == Material.TRAP_DOOR.getId()) {
+        type = checkBlock.getType();
+        if (type == Material.TRAP_DOOR) {
             face = checkBlock.getData() & 0x3;
             if (face == 0) {
                 return (true);
@@ -717,8 +703,8 @@ public class LockettePlayerListener implements Listener {
         }
 
         checkBlock = block.getRelative(BlockFace.SOUTH);
-        type = checkBlock.getTypeId();
-        if (type == Material.TRAP_DOOR.getId()) {
+        type = checkBlock.getType();
+        if (type == Material.TRAP_DOOR) {
             face = checkBlock.getData() & 0x3;
             if (face == 3) {
                 return (true);
@@ -726,8 +712,8 @@ public class LockettePlayerListener implements Listener {
         }
 
         checkBlock = block.getRelative(BlockFace.WEST);
-        type = checkBlock.getTypeId();
-        if (type == Material.TRAP_DOOR.getId()) {
+        type = checkBlock.getType();
+        if (type == Material.TRAP_DOOR) {
             face = checkBlock.getData() & 0x3;
             if (face == 1) {
                 return (true);

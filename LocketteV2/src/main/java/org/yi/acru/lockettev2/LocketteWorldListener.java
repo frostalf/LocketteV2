@@ -17,7 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.plugin.PluginManager;
 
-import org.yi.acru.lockettev2.*;
+//import org.yi.acru.lockettev2.*;
 
 //~--- JDK imports ------------------------------------------------------------
 
@@ -78,12 +78,13 @@ public class LocketteWorldListener implements Listener {
             }
 
             if (Lockette.explosionProtectionAll) {
-                if ((block.getTypeId() == Material.CHEST.getId()) || (block.getTypeId() == Material.DISPENSER.getId())
-                        || (block.getTypeId() == Material.FURNACE.getId())
-                        || (block.getTypeId() == Material.BURNING_FURNACE.getId())
-                        || (block.getTypeId() == Material.BREWING_STAND.getId())
-                        || (block.getTypeId() == Material.HOPPER.getId())
-                        || (block.getTypeId() == Material.DROPPER.getId())) {
+                if ((block.getType() == Material.CHEST) 
+                        || (block.getType() == Material.DISPENSER)
+                        || (block.getType() == Material.FURNACE)
+                        || (block.getType() == Material.BURNING_FURNACE)
+                        || (block.getType() == Material.BREWING_STAND)
+                        || (block.getType() == Material.HOPPER)
+                        || (block.getType() == Material.DROPPER)) {
                     event.setCancelled(true);
 
                     return;
@@ -92,6 +93,3 @@ public class LocketteWorldListener implements Listener {
         }
     }
 }
-
-
-//~ Formatted by Jindent --- http://www.jindent.com

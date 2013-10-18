@@ -11,13 +11,8 @@ package org.yi.acru.bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-
-import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.server.PluginDisableEvent;
-//import org.bukkit.event.server.ServerCommandEvent;
-//import org.bukkit.event.server.MapInitializeEvent;
-//import org.bukkit.event.server.ServerListPingEvent;
-
+import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.PluginManager;
 
 

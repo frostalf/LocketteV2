@@ -12,17 +12,12 @@ package org.yi.acru.bukkit;
 //import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
 //import org.anjocaido.groupmanager.GroupManager;
 //import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
-import org.bukkit.plugin.Plugin;
-
 import com.gmail.nossr50.mcMMO;
 import com.griefcraft.lwc.LWCPlugin;
 import com.massivecraft.factions.Factions;
-//import com.nijiko.permissions.PermissionHandler;
-//import com.nijikokun.bukkit.Permissions.Permissions;
 import com.palmergames.bukkit.towny.Towny;
-//import com.platymuus.bukkit.permissions.PermissionsPlugin;
 import net.milkbowl.vault.Vault;
-import net.milkbowl.vault.VaultEco;
+import org.bukkit.plugin.Plugin;
 
 public class PluginCoreLink{
 	private static PluginCore plugin;

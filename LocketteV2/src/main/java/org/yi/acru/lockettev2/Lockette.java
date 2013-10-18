@@ -26,9 +26,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import net.milkbowl.vault.Vault;
-import net.milkbowl.vault.VaultEco;
-import org.yi.acru.lockettev2.*;
 
 public class Lockette extends JavaPlugin {
 

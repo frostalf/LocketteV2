@@ -8,17 +8,12 @@ package org.yi.acru.lockettev2;
 
 //~--- non-JDK imports --------------------------------------------------------
 
-import org.bukkit.World;
-import org.bukkit.block.Block;
-//import org.yi.acru.lockettev2.*;
-
-//~--- JDK imports ------------------------------------------------------------
-
-//Imports.
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 
 public class LocketteDoorCloser implements Runnable {
     private static int doorTask = -1;

@@ -8,6 +8,7 @@ package org.yi.acru.lockettev2;
 
 //~--- non-JDK imports --------------------------------------------------------
 
+import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -16,13 +17,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.plugin.PluginManager;
-
-//import org.yi.acru.lockettev2.*;
-
-//~--- JDK imports ------------------------------------------------------------
-
-//Imports.
-import java.util.List;
 
 public class LocketteWorldListener implements Listener {
     private static Lockette plugin;

@@ -52,15 +52,14 @@ public class Lockette extends JavaPlugin {
     final static int materialTrapDoor = 96;
     final static int materialFenceGate = 107;
     private final static Logger log = Logger.getLogger("Minecraft");
-    public Lockette() {
-        plugin = this;
-    }
+
     @Override
     public void onLoad() {
     }
 
     @Override
     public void onEnable() {
+        plugin = this;
         if (enabled) {
             return;
         }
@@ -98,6 +97,7 @@ public class Lockette extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        plugin = null;
         if (!enabled) {
             return;
         }
@@ -611,13 +611,13 @@ public class Lockette extends JavaPlugin {
 
 
         /*
-		
+
          tempString = strings.getString("");
          if(tempString == null){
          strings.set("", "");
          stringChanged = true;
          }
-		
+
          */
 
         if (original) {
@@ -988,10 +988,10 @@ public class Lockette extends JavaPlugin {
         if (type == Material.CHEST || type == Material.TRAPPED_CHEST) {
             return (findBlockOwnerBase(block, null, false, false, false, false, false));
         }
-        if ((type == Material.DISPENSER) 
-                || (type == Material.FURNACE) 
+        if ((type == Material.DISPENSER)
+                || (type == Material.FURNACE)
                 || (type == Material.BURNING_FURNACE)
-                || (type == Material.BREWING_STAND) 
+                || (type == Material.BREWING_STAND)
                 || Lockette.isInList(type, Lockette.customBlockList)) {
             return (findBlockOwnerBase(block, null, false, false, false, false, false));
         }
@@ -1001,8 +1001,8 @@ public class Lockette extends JavaPlugin {
             }
         }
         if (Lockette.protectDoors) {
-            if ((type == Material.WOODEN_DOOR) 
-                    || (type == Material.IRON_DOOR_BLOCK) 
+            if ((type == Material.WOODEN_DOOR)
+                    || (type == Material.IRON_DOOR_BLOCK)
                     || (type == Material.FENCE_GATE)) {
                 return (findBlockOwnerBase(block, null, false, true, true, false, false));
             }
@@ -1069,8 +1069,8 @@ public class Lockette extends JavaPlugin {
             checkBlock = block.getRelative(BlockFace.UP);
             type = checkBlock.getType();
 
-            if ((type != Material.WOODEN_DOOR) 
-                    && (type != Material.IRON_DOOR_BLOCK) 
+            if ((type != Material.WOODEN_DOOR)
+                    && (type != Material.IRON_DOOR_BLOCK)
                     && (type != Material.FENCE_GATE)) {
                 // Handle door above type.
 
@@ -1100,10 +1100,10 @@ public class Lockette extends JavaPlugin {
         if (type == Material.CHEST || type == Material.TRAPPED_CHEST) {
             return (findBlockOwnerBase(block, ignore, true, false, false, false, false));
         }
-        if ((type == Material.DISPENSER) 
-                || (type == Material.FURNACE) 
+        if ((type == Material.DISPENSER)
+                || (type == Material.FURNACE)
                 || (type == Material.BURNING_FURNACE)
-                || (type == Material.BREWING_STAND) 
+                || (type == Material.BREWING_STAND)
                 || Lockette.isInList(type, Lockette.customBlockList)) {
             return (findBlockOwnerBase(block, ignore, false, false, false, false, false));
         }
@@ -1115,8 +1115,8 @@ public class Lockette extends JavaPlugin {
             }
         }
         if (Lockette.protectDoors) {
-            if ((type == Material.WOODEN_DOOR) 
-                    || (type == Material.IRON_DOOR_BLOCK) 
+            if ((type == Material.WOODEN_DOOR)
+                    || (type == Material.IRON_DOOR_BLOCK)
                     || (type == Material.FENCE_GATE)) {
                 return (findBlockOwnerBase(block, ignore, true, true, true, true, iterateFurther));
             }
@@ -1182,8 +1182,8 @@ public class Lockette extends JavaPlugin {
 
             checkBlock = block.getRelative(BlockFace.UP);
             type = checkBlock.getType();
-            if ((type == Material.WOODEN_DOOR) 
-                    || (type == Material.IRON_DOOR_BLOCK) 
+            if ((type == Material.WOODEN_DOOR)
+                    || (type == Material.IRON_DOOR_BLOCK)
                     || (type == Material.FENCE_GATE)) {
                 // Handle door above type.
 
@@ -1197,16 +1197,16 @@ public class Lockette extends JavaPlugin {
 
             checkBlock = block.getRelative(BlockFace.DOWN);
             type = checkBlock.getType();
-            if ((type == Material.WOODEN_DOOR) 
-                    || (type == Material.IRON_DOOR_BLOCK) 
+            if ((type == Material.WOODEN_DOOR)
+                    || (type == Material.IRON_DOOR_BLOCK)
                     || (type == Material.FENCE_GATE)) {
                 // For door below only.
                 // Don't include the block below door, as a sign there would not protect the target block.
 
                 Block checkBlock2 = checkBlock.getRelative(BlockFace.DOWN);
                 type = checkBlock2.getType();
-                if ((type == Material.WOODEN_DOOR) 
-                        || (type == Material.IRON_DOOR_BLOCK) 
+                if ((type == Material.WOODEN_DOOR)
+                        || (type == Material.IRON_DOOR_BLOCK)
                         || (type == Material.FENCE_GATE)) {
                     return (findBlockOwnerBase(checkBlock2, ignore, true, true, false, true, iterateFurther));
                 }
@@ -1234,8 +1234,8 @@ public class Lockette extends JavaPlugin {
             checkBlock = block.getRelative(BlockFace.UP);
             type = checkBlock.getType();
 
-            if ((type == Material.WOODEN_DOOR) 
-                    || (type == Material.IRON_DOOR_BLOCK) 
+            if ((type == Material.WOODEN_DOOR)
+                    || (type == Material.IRON_DOOR_BLOCK)
                     || (type == Material.FENCE_GATE)) {
                 checkBlock = findBlockOwnerBase(checkBlock, ignore, false, iterateUp, false, includeEnds, false);
             }
@@ -1255,8 +1255,8 @@ public class Lockette extends JavaPlugin {
             checkBlock = block.getRelative(BlockFace.DOWN);
             type = checkBlock.getType();
 
-            if ((type == Material.WOODEN_DOOR) 
-                    || (type == Material.IRON_DOOR_BLOCK) 
+            if ((type == Material.WOODEN_DOOR)
+                    || (type == Material.IRON_DOOR_BLOCK)
                     || (type == Material.FENCE_GATE)) {
                 checkBlock = findBlockOwnerBase(checkBlock, ignore, false, false, iterateDown, includeEnds, false);
             }
@@ -1433,8 +1433,8 @@ public class Lockette extends JavaPlugin {
             }
         }
         if (Lockette.protectDoors) {
-            if ((type == Material.WOODEN_DOOR) 
-                    || (type == Material.IRON_DOOR_BLOCK) 
+            if ((type == Material.WOODEN_DOOR)
+                    || (type == Material.IRON_DOOR_BLOCK)
                     || (type == Material.FENCE_GATE)) {
                 return (findBlockUsersBase(block, true, true, true, false, signBlock.getY()));
             }
@@ -1455,8 +1455,8 @@ public class Lockette extends JavaPlugin {
             checkBlock = block.getRelative(BlockFace.UP);
             type = checkBlock.getType();
 
-            if ((type == Material.WOODEN_DOOR) 
-                    || (type == Material.IRON_DOOR_BLOCK) 
+            if ((type == Material.WOODEN_DOOR)
+                    || (type == Material.IRON_DOOR_BLOCK)
                     || (type == Material.FENCE_GATE)) {
                 list.addAll(findBlockUsersBase(checkBlock, false, iterateUp, false, false, includeYPos));
             }
@@ -1470,8 +1470,8 @@ public class Lockette extends JavaPlugin {
             checkBlock = block.getRelative(BlockFace.DOWN);
             type = checkBlock.getType();
 
-            if ((type == Material.WOODEN_DOOR) 
-                    || (type == Material.IRON_DOOR_BLOCK) 
+            if ((type == Material.WOODEN_DOOR)
+                    || (type == Material.IRON_DOOR_BLOCK)
                     || (type == Material.FENCE_GATE)) {
                 list.addAll(findBlockUsersBase(checkBlock, false, false, iterateDown, false, includeYPos));
             }
@@ -1755,9 +1755,9 @@ public class Lockette extends JavaPlugin {
 
         //toggleDoor(block, null, false, false, null);
         //return(list);
-        if ((type == Material.WOODEN_DOOR) 
-                || (type == Material.IRON_DOOR_BLOCK) 
-                || (type == Material.TRAP_DOOR) 
+        if ((type == Material.WOODEN_DOOR)
+                || (type == Material.IRON_DOOR_BLOCK)
+                || (type == Material.TRAP_DOOR)
                 || (type == Material.FENCE_GATE)) {
             block.setData((byte) (block.getData() ^ 4));
             try {
